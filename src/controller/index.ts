@@ -1,6 +1,6 @@
 import type { ITGMessage } from "../sms-sender"
 import { sendMessage } from "../sms-sender/client"
-import { criticalMinimum, currentMessages, subCurrMessages } from "../utils"
+import { criticalMinimum, currentMessages, debug, subCurrMessages } from "../utils"
 
 const maxSymbols = 70
 let lastSending = new Date().toISOString().split('T')[0]
@@ -40,7 +40,8 @@ export const buildMessagesToOneAndSendIfLarge = () => {
     if (currentMessages > criticalMinimum) {
       lastSending = new Date().toISOString().split('T')[0]
       // Отправляем
-      //sendMessage(messageToSend)
+      if (!debug)
+        sendMessage(messageToSend)
     }
   }
 }

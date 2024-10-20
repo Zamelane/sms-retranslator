@@ -4,6 +4,7 @@ const login = Bun.env.login ?? ""
 const pass = Bun.env.pass ?? ""
 const phone = Bun.env.phone ?? ""
 const tokenTG = Bun.env.tokenTG ?? ""
+const debug = (Bun.env.debug ?? "false") == "false" ? false : true
 const totalMessages = 800
 let currentMessages = totalMessages
 const criticalMinimum = 10;
@@ -33,6 +34,8 @@ rawChats.forEach(chat => {
   })
 })
 
+console.log(debug ? 'Отладка включена' : 'Отладка отключена')
+
 export {
   tokenTG,
   login,
@@ -41,7 +44,8 @@ export {
   totalMessages,
   currentMessages,
   criticalMinimum,
-  chats
+  chats,
+  debug
 }
 
 export const subCurrMessages = async () => {
