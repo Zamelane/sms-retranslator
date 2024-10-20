@@ -1,0 +1,20 @@
+{
+  "name": "sms-retranslator",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/node-telegram-bot-api": "^0.64.7",
+    "android-sms-gateway": "^2.0.0",
+    "elysia": "^1.1.22",
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
