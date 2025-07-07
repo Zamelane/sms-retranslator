@@ -46,12 +46,10 @@ export const buildMessagesToOneAndSendIfLarge = () => {
     const messageToSend = message.substring(0, maxSymbols)
     message = message.substring(maxSymbols, message.length)
     
-    if (currentMessages > criticalMinimum) {
-      lastSending = new Date()
-      // Отправляем
-      if (!debug)
-        sendMessage(messageToSend)
-    }
+    lastSending = new Date()
+    // Отправляем
+    if (!debug && messageToSend.length > 1)
+      sendMessage(messageToSend)
   }
 }
 
