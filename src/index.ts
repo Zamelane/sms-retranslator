@@ -8,6 +8,7 @@ const bot = new TelegramBot(tokenTG, { polling: true })
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id
   const message = msg.text ?? ""
+  const reply = msg.reply_to_message?.text || null
 
   if (message.indexOf("@EugeniyBySMS_bot") > -1)
     bot.sendMessage(chatId,
@@ -20,7 +21,7 @@ bot.on('message', async (msg) => {
     bot.sendMessage(chatId, result == null ? "Ошибка отправки" : JSON.stringify(result))
   } else {
     //console.log(msg)
-    const mess = msg.text ?? ""
+    const mess = (reply ? `[${reply}]:` : "") +  message
 
     if (
       mess.length <= 288 
@@ -29,7 +30,7 @@ bot.on('message', async (msg) => {
       && mess.indexOf('{') == -1
       && mess.indexOf('}') == -1
     )
-    addMessageToSend(msg.from?.username ?? "", msg.text ?? "")
+    addMessageToSend(msg.from?.username ?? "", mess)
   }
 })
 
