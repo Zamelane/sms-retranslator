@@ -3,7 +3,7 @@ import { bot } from "./src"
 import { apiClient } from "./src/sms-sender/apiClient"
 import type { IReceivedMessage } from "./src/sms-sender"
 import { chats } from "./src/utils"
-import { buildMessagesToOneAndSendIfLarge } from "./src/controller"
+import { addMessageToSend, buildMessagesToOneAndSendIfLarge } from "./src/controller"
 
 bot.on('message', (msg) => {
   //console.log(msg.text)
@@ -35,6 +35,8 @@ new Elysia()
           parse_mode: 'HTML'
         }
       )
+
+      addMessageToSend('you', '[Вы здесь ответили]')
 
       // bot.sendMessage(
       //   chat.tgId, 

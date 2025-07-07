@@ -23,7 +23,7 @@ bot.on('message', async (msg) => {
     const mess = msg.text ?? ""
 
     if (
-      mess.length < 250 
+      mess.length <= 288 
       && mess.indexOf('<') == -1
       && mess.indexOf('>') == -1
       && mess.indexOf('{') == -1
