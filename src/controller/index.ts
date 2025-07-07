@@ -2,13 +2,22 @@ import type { ITGMessage } from "../sms-sender"
 import { sendMessage } from "../sms-sender/client"
 import { criticalMinimum, currentMessages, debug, subCurrMessages } from "../utils"
 
-const maxSymbols = 70
-let lastSending = new Date().toISOString().split('T')[0]
+const maxSymbols = 288
+const maxSeconds = 60
+let lastSending = new Date()
 
 const messagesToSend: ITGMessage[] = []
 
 let message = ""
 let lastUserName: string | null = null
+
+function isTimeDifferenceExceeded(date1: Date, date2: Date, maxSeconds: number): boolean {
+  // Получаем разницу в миллисекундах
+  const differenceMs = Math.abs(date1.getTime() - date2.getTime());
+  
+  // Конвертируем миллисекунды в секунды и сравниваем с maxSeconds
+  return differenceMs / 1000 > maxSeconds;
+}
 
 export const addMessageToSend = (userName: string, messageText: string) => {
   if (userName == "" || messageText == "")
@@ -33,12 +42,12 @@ export const buildMessagesToOneAndSendIfLarge = () => {
     message += currMessageToSend.messageText + "\n"
   }
 
-  while (message.length >= maxSymbols || lastSending != new Date().toISOString().split('T')[0]) {
+  while (message.length >= maxSymbols || isTimeDifferenceExceeded(lastSending, new Date(), maxSeconds)) {
     const messageToSend = message.substring(0, maxSymbols)
     message = message.substring(maxSymbols, message.length)
     
     if (currentMessages > criticalMinimum) {
-      lastSending = new Date().toISOString().split('T')[0]
+      lastSending = new Date()
       // Отправляем
       if (!debug)
         sendMessage(messageToSend)
