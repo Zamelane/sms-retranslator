@@ -33,6 +33,8 @@ const httpFetchClient = {
           body: JSON.stringify(body)
       });
 
+      console.log(response.body)
+
       return response.json();
   },
   delete: async (url: string, headers: Record<string, string>) => {
