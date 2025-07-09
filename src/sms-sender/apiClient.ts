@@ -61,7 +61,7 @@ for (const hook of webhooks) {
 if (!isFound) {
     await apiClient.registerWebhook({
         url: hookAddress,
-        event: WebHookEventType.SmsReceived
+        event: "sms:received"
     })
 }
 
