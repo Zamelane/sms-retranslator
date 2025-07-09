@@ -1,5 +1,20 @@
-import Client from "android-sms-gateway"
+import Client, {} from "android-sms-gateway"
 import { login, pass } from "../utils";
+
+const address: string|null = process.env.gate_url!
+const hookAddress: string|null = process.env.hook_url!
+
+// Крч не знаю как указать на неэкспортированный типа, поэтому просто вынес сюда
+declare enum WebHookEventType {
+	/**
+	 * Indicates that a new SMS message has been received.
+	 */
+	SmsReceived = "sms:received",
+	/**
+	 * Indicates that a ping request has been sent.
+	 */
+	SystemPing = "system:ping"
+}
 
 // Example of an HTTP client based on fetch
 const httpFetchClient = {
@@ -31,6 +46,24 @@ const httpFetchClient = {
 };
 
 // Initialize the client with your API credentials
-const apiClient = new Client(login, pass, httpFetchClient);
+const apiClient = new Client(login, pass, httpFetchClient, address);
+
+const hookUrl = address + "/"
+
+const webhooks = await apiClient.getWebhooks()
+let isFound = false
+for (const hook of webhooks) {
+    if (hook.url === hookAddress) {
+        isFound = true
+        break
+    }
+}
+
+if (!isFound) {
+    await apiClient.registerWebhook({
+        url: hookAddress,
+        event: WebHookEventType.SmsReceived
+    })
+}
 
 export { apiClient }
