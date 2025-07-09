@@ -2,7 +2,7 @@ import type { ITGMessage } from "../sms-sender"
 import { sendMessage } from "../sms-sender/client"
 import { criticalMinimum, currentMessages, debug, subCurrMessages } from "../utils"
 
-const maxSymbols = 288
+const maxSymbols = 268
 const maxSeconds = 60
 let lastSending = new Date()
 
