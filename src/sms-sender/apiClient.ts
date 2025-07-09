@@ -33,8 +33,6 @@ const httpFetchClient = {
           body: JSON.stringify(body)
       });
 
-      console.log(response.body)
-
       return response.json();
   },
   delete: async (url: string, headers: Record<string, string>) => {
@@ -49,7 +47,6 @@ const httpFetchClient = {
 
 // Initialize the client with your API credentials
 const apiClient = new Client(login, pass, httpFetchClient, address);
-
 const hookUrl = address + "/"
 
 const webhooks = await apiClient.getWebhooks()
