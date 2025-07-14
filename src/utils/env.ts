@@ -9,8 +9,6 @@ const totalMessages = 800
 let currentMessages = totalMessages
 const criticalMinimum = 10;
 
-console.log(`${login} ${pass}`)
-
 (await Bun.file('currMessages.txt').text().then((data) => {
   currentMessages = Number.parseInt(data)
 })
