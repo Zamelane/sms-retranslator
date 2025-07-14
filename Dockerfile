@@ -23,6 +23,7 @@ ENV NODE_ENV=production
 # RUN bun run build
 
 FROM build AS release
+RUN chown -R bun:bun /app
 USER bun
 EXPOSE 12345/tcp
 ENTRYPOINT [ "bun", "dev"]
